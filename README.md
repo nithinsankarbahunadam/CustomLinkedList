@@ -33,13 +33,3 @@ This project implements a **singly linked list** data structure in Java from scr
 - Traversal using `while` and `for` loops  
 - Method overloading and encapsulation  
 
----
-
-## 🏗️ Class Structure
-
-com.linkedlist
-└── CustomLinkedList.java
-├── insertFirst(), insertLast(), insert()
-├── deleteFirst(), deleteLast(), deleteAt()
-├── find(), get(), display()
-└── static class Node { int value; Node next; }
