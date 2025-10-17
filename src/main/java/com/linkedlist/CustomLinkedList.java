@@ -125,22 +125,6 @@ public class CustomLinkedList{
         return size;
     }
 
-    private static class Node{
-        private final int value;
-        private Node next;
-
-        public Node(int value){
-
-            this.value = value;
-        }
-
-        public Node(int value, Node next){
-            this.value = value;
-            this.next = next;
-        }
-    }
-
-
     // ===== Internal helpers =====
 
     private void checkNotEmpty() {
@@ -165,4 +149,18 @@ public class CustomLinkedList{
         }
     }
 
+    private static class Node{
+        private final int value;
+        private Node next;
+
+        public Node(int value){
+
+            this.value = value;
+        }
+
+        public Node(int value, Node next){
+            this.value = value;
+            this.next = next;
+        }
+    }
 }
