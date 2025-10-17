@@ -11,20 +11,44 @@ public class Main {
         list.insertFirst(74);
         list.insertFirst(35);
         list.insertFirst(26);
-        list.insertFirst(17);
-        list.insertLast(20);
+        list.insertLast(25);
+
+        list.insert(4,20);
+        list.display();
+
         list.insert(4,55);
+        list.display();
 
         int deletedFirstVal = list.deleteFirst();
         System.out.println(deletedFirstVal);
+        list.display();
 
         int deletedLastVal = list.deleteLast();
         System.out.println(deletedLastVal);
+        list.display();
 
         int deletedAtVal = list.deleteAt(3);
         System.out.println(deletedAtVal);
-
         list.display();
+
+
+        CustomDoubleLinkedList listD = new CustomDoubleLinkedList();
+        listD.insertFirst(97);
+        listD.insertFirst(74);
+        listD.insertFirst(35);
+        listD.insertFirst(26);
+        listD.insertLast(25);
+
+        listD.insert(4, 20); // 0-based index
+        listD.displayForward();   // 26 -> 35 -> 74 -> 97 -> 20 -> 25 -> End
+        listD.displayReverse();   // 25 -> 20 -> 97 -> 74 -> 35 -> 26 -> Start
+
+        System.out.println("Deleted first: " + listD.deleteFirst()); // 26
+        System.out.println("Deleted last: " + listD.deleteLast());   // 25
+        System.out.println("Deleted at 2: " + listD.deleteAt(2));    // removes 97 (after prior deletions)
+        listD.displayForward();
+        System.out.println("Size: " + listD.size());
+
 
 
     }

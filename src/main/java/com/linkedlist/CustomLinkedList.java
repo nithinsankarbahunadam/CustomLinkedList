@@ -121,6 +121,9 @@ public class CustomLinkedList{
         System.out.println("End");
     }
 
+    public int getSize() {
+        return size;
+    }
 
     private static class Node{
         private final int value;
@@ -134,6 +137,31 @@ public class CustomLinkedList{
         public Node(int value, Node next){
             this.value = value;
             this.next = next;
+        }
+    }
+
+
+    // ===== Internal helpers =====
+
+    private void checkNotEmpty() {
+        if (size == 0) {
+            throw new IllegalStateException("List is empty");
+        }
+    }
+
+    private void checkElementIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(
+                    "Index: " + index + ", Size: " + size
+            );
+        }
+    }
+
+    private void checkPositionIndex(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(
+                    "Index: " + index + ", Size: " + size
+            );
         }
     }
 
