@@ -31,6 +31,8 @@ public class Main {
         System.out.println(deletedAtVal);
         list.display();
 
+        System.out.println("Doubly Linked List");
+
 
         CustomDoubleLinkedList listD = new CustomDoubleLinkedList();
         listD.insertFirst(97);
