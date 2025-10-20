@@ -1,6 +1,14 @@
 package com.linkedlist;
 
-public class CustomDoubleLinkedList {
+
+/**
+ * Custom circular doubly-linked list of ints.
+ * Invariants:
+ *  - if size == 0: head == tail == null
+ *  - if size == 1: head == tail and head.next == head and head.prev == head
+ *  - if size > 1: tail.next == head and head.prev == tail
+ */
+public class CustomCircularLinkedList {
 
     private Node head;
     private Node tail;
@@ -17,25 +25,31 @@ public class CustomDoubleLinkedList {
     }
 
     /**
-     * Insert at the beginning (O(1))
+     * Insert at beginning (O(1))
      */
     public void insertFirst(int data) {
         Node node = new Node(data);
-        node.next = head;
-        node.prev = null;
 
-        if (head != null) {
-            head.prev = node;
+        if (head == null) {
+            // new single-node circular list
+            node.next = node;
+            node.prev = node;
+            head = tail = node;
         } else {
-            // list was empty, tail also becomes this node
-            tail = node;
+            // place node before current head
+            node.next = head;
+            node.prev = tail;
+
+            head.prev = node;
+            tail.next = node;
+
+            head = node;
         }
-        head = node;
         size++;
     }
 
     /**
-     * Insert at the end (O(1))
+     * Insert at end (O(1))
      */
     public void insertLast(int data) {
         if (head == null) {
@@ -43,11 +57,14 @@ public class CustomDoubleLinkedList {
             return;
         }
         Node node = new Node(data);
+
         node.prev = tail;
-        node.next = null;
+        node.next = head;
 
         tail.next = node;
+        head.prev = node;
         tail = node;
+
         size++;
     }
 
@@ -66,8 +83,8 @@ public class CustomDoubleLinkedList {
             return;
         }
 
-        Node nextNode = getNode(index);     // node currently at 'index'
-        Node prevNode = nextNode.prev;      // node at 'index-1'
+        Node nextNode = getNode(index); // node currently at index
+        Node prevNode = nextNode.prev;
         Node newNode = new Node(data);
 
         // Wire: prevNode <-> newNode <-> nextNode
@@ -87,13 +104,14 @@ public class CustomDoubleLinkedList {
         checkNotEmpty();
 
         int val = head.data;
-        head = head.next;
 
-        if (head != null) {
-            head.prev = null;
+        if (size == 1) {
+            // becomes empty
+            head = tail = null;
         } else {
-            // list became empty
-            tail = null;
+            head = head.next;
+            head.prev = tail;
+            tail.next = head;
         }
         size--;
         return val;
@@ -111,14 +129,15 @@ public class CustomDoubleLinkedList {
 
         int val = tail.data;
         tail = tail.prev;
-        tail.next = null;
+        tail.next = head;
+        head.prev = tail;
 
         size--;
         return val;
     }
 
     /**
-     * Delete at index (0.size-1) and return its value (O(min(index, size-index)))
+     * Delete at index (0..size-1) and return its value (O(min(index, size-index)))
      */
     public int deleteAt(int index) {
         checkElementIndex(index);
@@ -140,7 +159,7 @@ public class CustomDoubleLinkedList {
         prevNode.next = nextNode;
         nextNode.prev = prevNode;
 
-        // Help GC (optional)
+        // Help GC
         target.next = null;
         target.prev = null;
 
@@ -152,8 +171,10 @@ public class CustomDoubleLinkedList {
      * Return first node with matching data, or null if not found (O(n))
      */
     public Node find(int data) {
+        if (head == null) return null;
+
         Node cur = head;
-        while (cur != null) {
+        for (int i = 0; i < size; i++) {
             if (cur.data == data) return cur;
             cur = cur.next;
         }
@@ -169,27 +190,35 @@ public class CustomDoubleLinkedList {
     }
 
     /**
-     * Print from head to tail
+     * Print from head to tail (iterates exactly size elements)
      */
     public void displayForward() {
+        if (head == null) {
+            System.out.println("Empty");
+            return;
+        }
         Node node = head;
-        while (node != null) {
+        for (int i = 0; i < size; i++) {
             System.out.print(node.data + " -> ");
             node = node.next;
         }
-        System.out.println("End");
+        System.out.println("(back to head)");
     }
 
     /**
-     * Print from tail to head
+     * Print from tail to head (iterates exactly size elements)
      */
     public void displayReverse() {
+        if (tail == null) {
+            System.out.println("Empty");
+            return;
+        }
         Node node = tail;
-        while (node != null) {
+        for (int i = 0; i < size; i++) {
             System.out.print(node.data + " -> ");
             node = node.prev;
         }
-        System.out.println("Start");
+        System.out.println("(back to tail)");
     }
 
     // ===== Internal helpers =====
@@ -239,7 +268,7 @@ public class CustomDoubleLinkedList {
 
     // ===== Node type =====
 
-    private static class Node {
+    public static class Node {
         int data;
         Node next;
         Node prev;
@@ -255,4 +284,3 @@ public class CustomDoubleLinkedList {
         }
     }
 }
-

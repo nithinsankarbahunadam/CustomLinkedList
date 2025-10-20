@@ -52,6 +52,26 @@ public class Main {
         System.out.println("Size: " + listD.size());
 
 
+        CustomCircularLinkedList listC = new CustomCircularLinkedList();
+
+        listC.insertFirst(8);   // list: 8
+        listC.insertFirst(12);  // list: 12 -> 8 (circular)
+        listC.insertLast(20);   // list: 12 -> 8 -> 20
+        listC.insert(1, 15);    // list: 12 -> 15 -> 8 -> 20
+
+        System.out.println("Forward:");
+        listC.displayForward();
+
+        System.out.println("Reverse:");
+        listC.displayReverse();
+
+        System.out.println("deleteAt(1) => " + listC.deleteAt(1)); // removes 15
+        System.out.println("deleteFirst() => " + listC.deleteFirst()); // removes 12
+        System.out.println("deleteLast() => " + listC.deleteLast()); // removes 20
+
+        listC.displayForward();
+
+
 
     }
 }
